@@ -217,6 +217,9 @@ class Application(Frame):
                             self.__objects.append(AbstractObject.load(self, self.__can, o))
                         for l in loading["links"]:
                             self.__links.append(AbstractLink.load(self, self.__can, l))
+                        # Reset des IDs dans le bon ordre :
+                        for id, o in enumerate(self.__objects):
+                            o.ID = id
                     self.after(100, self.updateLinks)
                 else:
                     raise ValueError("Format de fichier non compatible.\nCe format de fichier n'est pas supporté pour le moment.")

@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from tkinter import *
 from tkinter.ttk import *
+from tkinter import *
 from tkinter import Frame, Label
 from colorsys import *
 from util.theme import *
@@ -31,20 +31,20 @@ THEME = {
         "background": "#333333", "bg": "#333333",
         "classtitlebg" : "black",
         "classbg" : "#111111",
-        "interfacetitlebg" : "#7D00CC",
-        "interfacebg" : "#50007F"
+        "interfacetitlebg" : "#2F004F",
+        "interfacebg" : "#3F007F"
     },
     "aqua": {
         "foreground": "#003333", "fg": "#003333",
         "background": "#00AAAA", "bg": "#00AAAA",
         "classtitlebg" : "dark cyan",
         "classbg" : "cyan",
-        "interfacetitlebg" : "#9800FF",
-        "interfacebg" : "#8728CC"
+        "interfacetitlebg" : "#7D00CC",
+        "interfacebg" : "#50007F"
     }
 }
 
-THEME_ACTIF = "normal"
+THEME_ACTIF = "dark"
 
 # TH�ME :
 style = Style()
