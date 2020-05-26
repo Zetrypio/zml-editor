@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from tkinter.ttk import *
 from tkinter import *
+from tkinter.ttk import *
 from tkinter import Frame, Label
 from colorsys import *
 from util.theme import *
@@ -44,7 +44,7 @@ THEME = {
     }
 }
 
-THEME_ACTIF = "dark"
+THEME_ACTIF = "normal"
 
 # TH�ME :
 style = Style()

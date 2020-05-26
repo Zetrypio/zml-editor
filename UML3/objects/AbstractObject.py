@@ -102,6 +102,9 @@ class AbstractObject(MoveableObject):
         }
 
     def redraw(self):
+        """
+        Permet de redessiner l'objet.
+        """
         self.__contenu.destroy()
         # Cadre de la classe. Comme on peut le bouger (via l'héritage), ça m'a fait pensé
         # à une fenêtre, donc le nom de la couleur est windowbg et windowtitlebg.
@@ -138,6 +141,10 @@ class AbstractObject(MoveableObject):
         self.rmenu.add_cascade(label = "Créer un lien", menu = self.rmenu.createLink)
         self.rmenu.add_command(label = "Renommer", command = self.renommer)
         self.rmenu.add_command(label = "Supprimer", command = self.supprimer)
+        
+        # Réajouter les attributs et les méthodes :
+        for content in self.__attributs + self.__methodes:
+            content.redraw()
 
         # Autoriser le drag & drop :
         self.enableMouseControlling()

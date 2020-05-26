@@ -61,7 +61,7 @@ class Methode(AbstractContent):
             self.rmenu.type.add_separator()
             self.rmenu.type.add_radiobutton(variable = self.type, value = OBJECT ,   command = self.updateText, label = "object")
             self.rmenu.add_command(label = "Renommer")
-            self.rmenu.add_command(label = "Supprimer", command = self.delete)
+            self.rmenu.add_command(label = "Supprimer la méthode %s"%self.nom, command = self.delete)
             self.rmenu.add_cascade(label = "Type", menu = self.rmenu.type)
             self.rmenu.add_cascade(label = "Visibilitée", menu = self.rmenu.visibilitee)
 

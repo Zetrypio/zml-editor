@@ -44,8 +44,8 @@ class AbstractContent:
             self.__deleted = True
             self.label.grid_forget()
             self.label.destroy()
-            self.classe.redraw()
             self.classe.removeAttribut(self)
+            self.classe.redraw()
     
     def redraw(self):
         if not self.__deleted:
