@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 from .links.AbstractLink import *
-from .links.DoubleAssociationLink import *
+from .links.DependanceLink import *
 from .links.AssociationLink import *
+from .links.DoubleAssociationLink import *
 from .links.InheritanceLink import *
 from .links.InterfaceImplementationLink import *
 from .links.AggregationLink import *
@@ -35,6 +36,8 @@ class ClassObject(AbstractObject):
     
     def getLinkClassTo(self, obj):
         debug("Link type : %s"%self._linkType)
+        if self._linkType == DEPENDANCE:
+            return DependanceLink
         if self._linkType == ASSOCIATION:
             return AssociationLink
         if self._linkType == DOUBLE_ASSOCIATION:

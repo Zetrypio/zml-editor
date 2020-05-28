@@ -28,6 +28,8 @@ class AbstractLink:
             cls = AggregationLink
         elif o["type"] == "AssociationLink":
             cls = AssociationLink
+        elif o["type"] == "DependanceLink":
+            cls = DependanceLink
         elif o["type"] == "DoubleAssociationLink":
             cls = DoubleAssociationLink
         elif o["type"] == "CompositionLink":
@@ -111,6 +113,7 @@ class AbstractLink:
 
 from .AggregationLink import *
 from .AssociationLink import *
+from .DependanceLink import *
 from .DoubleAssociationLink import *
 from .CompositionLink import *
 from .InheritanceLink import *

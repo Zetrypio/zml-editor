@@ -133,6 +133,7 @@ class AbstractObject(MoveableObject):
         self.rmenu.add_command(label = "Ajouter un attribut", command = self.ajouter_attribut)
         self.rmenu.add_command(label = "Ajouter une méthode", command = self.ajouter_methode)
         self.rmenu.createLink = Menu(self.rmenu, tearoff=0)
+        self.rmenu.createLink.add_command(label=DEPENDANCE,         command = lambda : self.beginLink(DEPENDANCE),         image = getImage("assets/textures/menu_icons/arrows/dependance.png"))
         self.rmenu.createLink.add_command(label=ASSOCIATION,        command = lambda : self.beginLink(ASSOCIATION),        image = getImage("assets/textures/menu_icons/arrows/association_simple.png"))
         self.rmenu.createLink.add_command(label=DOUBLE_ASSOCIATION, command = lambda : self.beginLink(DOUBLE_ASSOCIATION), image = getImage("assets/textures/menu_icons/arrows/association_double.png"))
         self.rmenu.createLink.add_command(label=INHERITANCE,        command = lambda : self.beginLink(INHERITANCE),        image = getImage("assets/textures/menu_icons/arrows/heritage.png"))
