@@ -67,7 +67,7 @@ class Application(Frame):
         
         # Si on lui donne pas de nom, ça l'annule, sinon, ça l'ajoute :
         if not obj.renommer():
-           obj.supprimer(confirmation = False)
+            obj.supprimer(confirmation = False)
 
     def addInterface(self):
         """Permet d'ajouter une interface."""
@@ -78,7 +78,7 @@ class Application(Frame):
         
         # Si on lui donne pas de nom, ça l'annule, sinon, ça l'ajoute :
         if not obj.renommer():
-           obj.supprimer(confirmation = False)
+            obj.supprimer(confirmation = False)
 
     def addEnum(self):
         """Permet d'ajouter une enum."""
@@ -89,7 +89,7 @@ class Application(Frame):
         
         # Si on lui donne pas de nom, ça l'annule, sinon, ça l'ajoute :
         if not obj.renommer():
-           obj.supprimer(confirmation = False)
+            obj.supprimer(confirmation = False)
 
     def removeObject(self, object):
         """Permet de supprimer un objet"""
