@@ -224,6 +224,7 @@ class DialogBuilder:
             options = {"nom" : etr.get(), "style":self.__style}
             if master is not None:          options["master"] = master
             if len(self.__visibilitees):    options["visibilitee"] = varV
+            if len(self.__modifiers):       options["modifiers"] = varsM
             if self.__typable:              options["type"] = varT
             result = self.__cls(**options)
         else:

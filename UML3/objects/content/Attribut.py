@@ -9,8 +9,8 @@ from .AbstractContent import *
 
 class Attribut(AbstractContent):
     """Classe représentant un attribut."""
-    def __init__(self, master, nom, visibilitee, type, style):
-        super().__init__(master, nom, visibilitee, type, style)
+    def __init__(self, master, nom, visibilitee, modifiers, type, style):
+        super().__init__(master, nom, visibilitee, modifiers, type, style)
     
     def __del__(self):
         try:
@@ -20,7 +20,7 @@ class Attribut(AbstractContent):
     
     @staticmethod
     def load(master, style, o):
-        return [Attribut(master, a["name"], StringVar(value = a["visibility"]), StringVar(value = a["type"]), style)
+        return [Attribut(master, a["name"], StringVar(value = a["visibility"]), {m: BooleanVar(value = a["modifiers"][m]) for m in a.get("modifiers", {})}, StringVar(value = a["type"]), style)
                 for a in o]
     
     def getCadre(self):

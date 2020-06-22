@@ -2,9 +2,9 @@
 from .AbstractContent import *
 
 class Methode(AbstractContent):
-    def __init__(self, master, nom, visibilitee, type, style, *argsTypes):
+    def __init__(self, master, nom, visibilitee, modifiers, type, style, *argsTypes):
         self.argsTypes = argsTypes
-        super().__init__(master, nom, visibilitee, type, style)
+        super().__init__(master, nom, visibilitee, modifiers, type, style)
     
     def save(self):
         saving = super().save()
@@ -15,7 +15,7 @@ class Methode(AbstractContent):
 
     @staticmethod
     def load(master, style, o):
-        return [Methode(master, m["name"], StringVar(value = m["visibility"]), StringVar(value = m["type"]), style, *[t["type"] for t in m["args"]])
+        return [Methode(master, m["name"], StringVar(value = m["visibility"]), {mod: BooleanVar(value = m["modifiers"][mod]) for mod in m.get("modifiers", {})}, StringVar(value = m["type"]), style, *[t["type"] for t in m["args"]])
                 for m in o]
 
     def getCadre(self):
