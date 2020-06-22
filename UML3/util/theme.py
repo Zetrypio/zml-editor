@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from tkinter.ttk import *
 from tkinter import *
+from tkinter.ttk import *
 from tkinter import Frame, Label
 from colorsys import *
 from util.theme import *
