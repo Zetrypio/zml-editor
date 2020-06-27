@@ -60,7 +60,7 @@ class AbstractContent:
             # attributs graphiques
             italic = "italic" if self.modifiers.get("abstract", BooleanVar()).get() else ""
             underline = "underline" if self.modifiers.get("static", BooleanVar()).get() else ""
-            font = "Arial 10 %s %s"%(italic, underline)
+            font = "Arial 9 %s %s"%(italic, underline)
             self.label = Label(self.getCadre(), bg=getColor("%sbg"%self.__style), fg = getColor("fg"), font=font)
             self.label.grid(sticky = W)
 
