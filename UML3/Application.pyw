@@ -5,6 +5,8 @@ from tkinter.messagebox import showerror, askyesnocancel
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from util.theme import *
 
+from diagram.ObjectDiagram import *
+
 from objects.AbstractObject import *
 from objects.ClassObject import *
 from objects.InterfaceObject import *
