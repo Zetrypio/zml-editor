@@ -25,10 +25,10 @@ class ObjectDiagram(AbstractDiagram):
         self.__can.bind_all("<Button-1>", self.clic, add=1)
         
         # RMenu (menu clic-droit) :
-        self.__menu = RMenu(self)
-        self.__menu.add_command(label = "Ajouter une Classe",    command = self.addClass)
-        self.__menu.add_command(label = "Ajouter une Interface", command = self.addInterface)
-        self.__menu.add_command(label = "Ajouter une Enum",      command = self.addEnum)
+        self.__rmenu = RMenu(self)
+        self.__rmenu.add_command(label = "Ajouter une Classe",    command = self.addClass)
+        self.__rmenu.add_command(label = "Ajouter une Interface", command = self.addInterface)
+        self.__rmenu.add_command(label = "Ajouter une Enum",      command = self.addEnum)
         
         # Liens en créations:
         self.__currentCreatingLink = None
