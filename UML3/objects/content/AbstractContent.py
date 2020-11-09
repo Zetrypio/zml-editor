@@ -8,7 +8,8 @@ from util.widgets.RMenu import *
 class AbstractContent:
     """Classe représentant un contenu de classe comme un attribut ou une méthode."""
     def __init__(self, master, nom, visibilitee, modifiers, type, style):
-        assert self.__class__ != AbstractContent
+        if self.__class__ == AbstractContent:
+            raise RuntimeError("Can't instantiate abstract class AbstractContent directly.")
         # Attribut du parent :
         self.classe = master
         # Attributs normaux :

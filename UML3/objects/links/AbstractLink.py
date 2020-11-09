@@ -5,7 +5,8 @@ from util.util import *
 
 class AbstractLink:
     def __init__(self, can, objA, objB):
-        assert self.__class__ != AbstractLink
+        if self.__class__ == AbstractLink:
+            raise RuntimeError("Can't instantiate abstract class AbstractLink directly.")
         self._can = can
         self._objA = objA
         self._objB = objB

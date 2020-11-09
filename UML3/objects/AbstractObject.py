@@ -23,7 +23,8 @@ class AbstractObject(MoveableObject):
         @param canvas : le Canvas qui contient cet classe/objet.
         @param nom = "": le nom de la classe/objet.
         """
-        assert self.__class__ is not AbstractObject
+        if self.__class__ == AbstractObject:
+            raise RuntimeError("Can't instantiate abstract class AbstractObject directly.")
         # super() :
         super().__init__(canvas)
         # Attributs normaux.
