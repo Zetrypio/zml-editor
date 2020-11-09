@@ -11,8 +11,10 @@ from objects.AbstractObject import *
 from objects.ClassObject import *
 from objects.InterfaceObject import *
 
-from util.widgets.RMenu import *
+from util.datafix import DataFixRegistry # Besoin d'être avant l'import suivant.
+from util.datafix.AbstractDataFix import *
 from util.log import * 
+from util.widgets.RMenu import *
 
 from MenuBar import *
 
@@ -86,17 +88,10 @@ class Application(Frame):
                     self.__saveLocation = loc
                     with open(self.__saveLocation, "r", encoding="utf-8") as f:
                         loading = json.load(f)
-                    if loading["version"] > 1.0 or loading["version"] < 1.0:
+                    if loading["version"] > 1.01 or loading["version"] < 1.0:
                         raise ValueError("Version du fichier non supportée.")
-                    elif loading["version"] == 1.0:
-                        for o in loading["objects"]:
-                            self.__objects.append(AbstractObject.load(self, self.__can, o))
-                        for l in loading["links"]:
-                            self.__links.append(AbstractLink.load(self, self.__can, l))
-                        # Reset des IDs dans le bon ordre :
-                        for id, o in enumerate(self.__objects):
-                            o.ID = id
-                    self.after(100, self.updateLinks)
+                    AbstractDataFix.fix(loading)
+                    self.__diagram.load(loading)
                 else:
                     raise ValueError("Format de fichier non compatible.\nCe format de fichier n'est pas supporté pour le moment.")
             except Exception as e:

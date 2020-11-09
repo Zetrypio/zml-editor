@@ -82,6 +82,7 @@ class ObjectDiagram(AbstractDiagram):
             if l.isLinkedTo(object):
                 l.delete()
                 self.__links.remove(l)
+
     ""
     #############################
     # Méthodes pour les liens : #
@@ -96,7 +97,7 @@ class ObjectDiagram(AbstractDiagram):
         self.__currentCreatingLink = self.__can.create_line(x, y, x, y, fill="#00BB00", width = 2)
         self.__currentCreatingLink_binding = self.__can.bind("<Motion>", lambda e: self.__moveLink(e.x, e.y), add=1)
         self.__moveLink(self.__can.winfo_pointerx() - self.__can.winfo_rootx(), self.__can.winfo_pointery() - self.__can.winfo_rooty())
-    
+
     def __moveLink(self, x, y):
         # Si c'est pas en cours on annule rien.
         if self.__currentCreatingLink is None:
@@ -118,7 +119,7 @@ class ObjectDiagram(AbstractDiagram):
         self.__currentCreatingLink_x1 = -1
         self.__currentCreatingLink_y1 = -1
         self.__currentCreatingLink_binding = None
-        
+
         return True
 
     def clic(self, event):
@@ -133,7 +134,7 @@ class ObjectDiagram(AbstractDiagram):
                 self.__links.append(l)
             else:
                 showerror("Lien impossible", "Il est impossible de créer un lien de cette sorte entre ces 2 objets.")
-    
+
     def updateLinks(self):
         for l in self.__links:
             l.redraw()
@@ -143,7 +144,7 @@ class ObjectDiagram(AbstractDiagram):
     # Méthodes de la barre de menus de  #
     # manière spécifique à ce diagramme #
     #####################################
-    
+
     def new(self):
         self.cancelLink()
         for o in reversed(self.__objects):
@@ -157,4 +158,22 @@ class ObjectDiagram(AbstractDiagram):
         for o in self.__objects:
             if o.ID == id:
                 return o
+
+    def load(self, loading):
+        """
+        Permet d'effacer tout ce qui est présent et de recharger
+        suivant les données qui dont passées en argument.
+        @param loading: Dictionnaire d'enregistrement des données.
+        """
+        import pprint
+        pprint.pprint(loading)
+        objectDiagram = loading["diagrams"]["objects"]
+        for o in objectDiagram["objects"]:
+            self.__objects.append(AbstractObject.load(self, self.__can, o))
+        for l in objectDiagram["links"]:
+            self.__links.append(AbstractLink.load(self, self.__can, l))
+        # Reset des IDs dans le bon ordre :
+        for id, o in enumerate(self.__objects):
+            o.ID = id
+        self.after(100, self.updateLinks)
 
