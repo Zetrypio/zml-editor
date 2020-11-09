@@ -13,6 +13,8 @@ class AbstractDataFix:
         @param toVersion: dernière version sur laquelle le fix peut être appliqué (inclue).
         Si toVersion n'est pas précisé, il est mis à la même valeur que fromVersion.
         """
+        if self.__class__ == AbstractDataFix:
+            raise RuntimeError("Can't instantiate abstract class AbstractDataFix directly.")
         if toVersion is None:
             toVersion = fromVersion
         if toVersion < fromVersion:
