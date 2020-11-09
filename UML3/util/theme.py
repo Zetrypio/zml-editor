@@ -23,6 +23,8 @@ THEME = {
         "background": "#EEEEEE", "bg": "#EEEEEE",
         "classtitlebg" : "beige",
         "classbg" : "beige",
+        "enumtitlebg" : "#2bff60",
+        "enumbg" : "#6aff8f",
         "interfacetitlebg" : "#B732FF",
         "interfacebg" : "#D47FFF"
     },
@@ -31,6 +33,8 @@ THEME = {
         "background": "#333333", "bg": "#333333",
         "classtitlebg" : "black",
         "classbg" : "#111111",
+        "enumtitlebg" : "#004010",
+        "enumbg" : "#005515",
         "interfacetitlebg" : "#2F004F",
         "interfacebg" : "#3F007F"
     },
@@ -39,12 +43,14 @@ THEME = {
         "background": "#00AAAA", "bg": "#00AAAA",
         "classtitlebg" : "dark cyan",
         "classbg" : "cyan",
+        "enumtitlebg" : "#2bff60",
+        "enumbg" : "#6aff8f",
         "interfacetitlebg" : "#7D00CC",
         "interfacebg" : "#50007F"
     }
 }
 
-THEME_ACTIF = "normal"
+THEME_ACTIF = "dark"
 
 # TH�ME :
 style = Style()

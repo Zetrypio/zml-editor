@@ -81,6 +81,8 @@ class AbstractObject(MoveableObject):
             obj = ClassObject.load(app, can, o)
         elif type == "InterfaceObject":
             obj = InterfaceObject.load(app, can, o)
+        elif type == "EnumObject":
+            obj = EnumObject.load(app, can, o)
         else:
             raise ValueError("Type d'objet inconnu")
         
@@ -304,6 +306,6 @@ class AbstractObject(MoveableObject):
         self.__label_nom.config(text = nom)
         return True
 
-
-from .InterfaceObject import *
 from .ClassObject import *
+from .EnumObject import *
+from .InterfaceObject import *

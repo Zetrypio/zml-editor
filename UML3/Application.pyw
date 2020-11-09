@@ -9,6 +9,7 @@ from diagram.ObjectDiagram import *
 
 from objects.AbstractObject import *
 from objects.ClassObject import *
+from objects.EnumObject import *
 from objects.InterfaceObject import *
 
 from util.widgets.RMenu import *
