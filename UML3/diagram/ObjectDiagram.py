@@ -165,8 +165,6 @@ class ObjectDiagram(AbstractDiagram):
         suivant les données qui dont passées en argument.
         @param loading: Dictionnaire d'enregistrement des données.
         """
-        import pprint
-        pprint.pprint(loading)
         objectDiagram = loading["diagrams"]["objects"]
         for o in objectDiagram["objects"]:
             self.__objects.append(AbstractObject.load(self, self.__can, o))
@@ -175,7 +173,7 @@ class ObjectDiagram(AbstractDiagram):
         # Reset des IDs dans le bon ordre :
         for id, o in enumerate(self.__objects):
             o.ID = id
-        self.after(100, self.updateLinks)
+        self.after(250, self.updateLinks)
 
     def save(self):
         # On obtient les données :
