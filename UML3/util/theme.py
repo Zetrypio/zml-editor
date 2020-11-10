@@ -50,7 +50,7 @@ THEME = {
     }
 }
 
-THEME_ACTIF = "dark"
+THEME_ACTIF = "normal"
 
 # TH�ME :
 style = Style()
