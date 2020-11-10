@@ -177,3 +177,16 @@ class ObjectDiagram(AbstractDiagram):
             o.ID = id
         self.after(100, self.updateLinks)
 
+    def save(self):
+        # On obtient les données :
+        saving = {
+            "version": 1.0,
+            "objects":[],
+            "links":[]
+        }
+        for o in self.__objects:
+            saving["objects"].append(o.save())
+        for l in self.__links:
+            saving["links"].append(l.save())
+        return saving
+

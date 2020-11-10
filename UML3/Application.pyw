@@ -114,15 +114,11 @@ class Application(Frame):
         try:
             # On obtient les données :
             saving = {
-                "version": 1.0,
-                "objects":[],
-                "links":[]
+                "version": 1.01,
+                "diagrams": {
+                    "objects": self.__diagram.save()
+                }
             }
-            for o in self.__objects:
-                saving["objects"].append(o.save())
-            for l in self.__links:
-                saving["links"].append(l.save())
-
             # On enregistre :
             with open(self.__saveLocation, "w", encoding="utf-8") as f:
                 json.dump(saving, f)
