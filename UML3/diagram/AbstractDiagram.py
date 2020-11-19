@@ -6,3 +6,6 @@ class AbstractDiagram(Canvas):
         if self.__class__ == AbstractDiagram:
             raise RuntimeError("Can't instantiate abstract class AbstractDiagram directly.")
         super().__init__(master, **kwargs)
+
+    def getSaveName(self):
+        raise NotImplementedError

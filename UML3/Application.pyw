@@ -29,8 +29,11 @@ class Application(Frame):
         self.__saveLocation = ""
 
         # Diagrams :
-        self.__diagram = ObjectDiagram(self)
-        self.__diagram.pack(expand = YES, fill = BOTH)
+        self.__diagrams = [
+            ObjectDiagram(self)
+        ]
+        for diagram in self.__diagrams:
+            diagram.pack(expand = YES, fill = BOTH)
 
         # Barre de Menus :
         self.__menubar = MenuBar(self.winfo_toplevel(), self)
@@ -54,7 +57,8 @@ class Application(Frame):
         @return True si le fichier a été créé avec succès, False sinon.
         """
         if not confirmation or self.confirmation("de créer un nouveau fichier"):
-            self.__diagram.new()
+            for d in self.__diagrams:
+                d.new()
             self.__saveLocation = ""
             self.clearUndoStack()
             return True
@@ -92,7 +96,8 @@ class Application(Frame):
                     if loading["version"] > 1.01 or loading["version"] < 1.0:
                         raise ValueError("Version du fichier non supportée.")
                     AbstractDataFix.fix(loading)
-                    self.__diagram.load(loading)
+                    for d in self.__diagrams:
+                        d.load(loading)
                 else:
                     raise ValueError("Format de fichier non compatible.\nCe format de fichier n'est pas supporté pour le moment.")
             except Exception as e:
@@ -117,7 +122,7 @@ class Application(Frame):
             saving = {
                 "version": 1.01,
                 "diagrams": {
-                    "objects": self.__diagram.save()
+                    d.getSaveName() : d.save() for d in self.__diagrams
                 }
             }
             # On enregistre :

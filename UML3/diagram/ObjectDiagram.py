@@ -175,6 +175,9 @@ class ObjectDiagram(AbstractDiagram):
             o.ID = id
         self.after(250, self.updateLinks)
 
+    def getSaveName(self):
+        return "objects"
+
     def save(self):
         # On obtient les données :
         saving = {

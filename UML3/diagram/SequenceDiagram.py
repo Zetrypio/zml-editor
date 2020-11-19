@@ -9,21 +9,21 @@ class SequenceDiagram(AbstractDiagram):
     """Diagramme de séquence."""
     def __init__(self, master = None, **kwargs):
         super().__init__(master, **kwargs)
-        
+
         # Attributs normaux
         self.__objects = []
         self.__links = []
-        
+
         # Canvas des dessins global
         self.__can = Canvas(self, relief = SUNKEN, bd = 3)
         self.__can.pack(expand = YES, fill = BOTH)
         self.__can.bind_all("<Escape>",   lambda e:self.cancelLink(), add=1)
         self.__can.bind_all("<Button-1>", self.clic, add=1)
-        
+
         # RMenu (menu clic-droit) :
         self.__rmenu = RMenu(self)
         self.__rmenu.add_command(label = "Ajouter un objet", command = self.addClass)
-        
+
         # Liens en créations:
         self.__currentCreatingLink = {
             "id": None,
@@ -32,4 +32,6 @@ class SequenceDiagram(AbstractDiagram):
             "y1": -1,
             "binding": None,
         }
-        
+
+    def getSaveName(self):
+        return "sequence"
