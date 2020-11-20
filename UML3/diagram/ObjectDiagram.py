@@ -31,11 +31,13 @@ class ObjectDiagram(AbstractDiagram):
         self.__rmenu.add_command(label = "Ajouter une Enum",      command = self.addEnum)
         
         # Liens en créations:
-        self.__currentCreatingLink = None
-        self.__currentCreatingLink_object = None
-        self.__currentCreatingLink_x1 = -1
-        self.__currentCreatingLink_y1 = -1
-        self.__currentCreatingLink_binding = None
+        self.__currentCreatingLink = {
+            "id": None,
+            "object": None,
+            "x1": -1,
+            "y1": -1,
+            "binding": None
+        }
     
     "" # Note : Ces marques me servent uniquement pour que le repli de code de mon éditeur fasse ce que je veux.
     ##########################
@@ -89,20 +91,21 @@ class ObjectDiagram(AbstractDiagram):
     #############################
 
     def beginLink(self, object, x, y):
-        if self.__currentCreatingLink is not None:
+        if self.__currentCreatingLink["id"] is not None:
             self.cancelLink()
-        self.__currentCreatingLink_object = object
-        self.__currentCreatingLink_x1 = x
-        self.__currentCreatingLink_y1 = y
-        self.__currentCreatingLink = self.__can.create_line(x, y, x, y, fill="#00BB00", width = 2)
-        self.__currentCreatingLink_binding = self.__can.bind("<Motion>", lambda e: self.__moveLink(e.x, e.y), add=1)
+        self.__currentCreatingLink["object"]  = object
+        self.__currentCreatingLink["x1"]      = x
+        self.__currentCreatingLink["y1"]      = y
+        self.__currentCreatingLink["id"]      = self.__can.create_line(x, y, x, y, fill="#00BB00", width = 2)
+        self.__currentCreatingLink["binding"] = self.__can.bind("<Motion>", lambda e: self.__moveLink(e.x, e.y), add=1)
+
         self.__moveLink(self.__can.winfo_pointerx() - self.__can.winfo_rootx(), self.__can.winfo_pointery() - self.__can.winfo_rooty())
 
     def __moveLink(self, x, y):
         # Si c'est pas en cours on annule rien.
-        if self.__currentCreatingLink is None:
+        if self.__currentCreatingLink["id"] is None:
             return
-        self.__can.coords(self.__currentCreatingLink, self.__currentCreatingLink_x1, self.__currentCreatingLink_y1, x, y)
+        self.__can.coords(self.__currentCreatingLink["id"], self.__currentCreatingLink["x1"], self.__currentCreatingLink["y1"], x, y)
 
     def cancelLink(self):
         """Permet d'annuler la création d'un lien en cours."""
@@ -110,15 +113,15 @@ class ObjectDiagram(AbstractDiagram):
         if self.__currentCreatingLink is None:
             return False
         # On debind et efface tout :
-        self.__can.delete(self.__currentCreatingLink)
-        self.__can.unbind(self.__currentCreatingLink_binding)
+        self.__can.delete(self.__currentCreatingLink["id"])
+        self.__can.unbind(self.__currentCreatingLink["binding"])
 
         # On reset les variables :
-        self.__currentCreatingLink = None
-        self.__currentCreatingLink_object = None
-        self.__currentCreatingLink_x1 = -1
-        self.__currentCreatingLink_y1 = -1
-        self.__currentCreatingLink_binding = None
+        self.__currentCreatingLink["id"]      = None
+        self.__currentCreatingLink["object"]  = None
+        self.__currentCreatingLink["x1"]      = -1
+        self.__currentCreatingLink["y1"]      = -1
+        self.__currentCreatingLink["binding"] = None
 
         return True
 
@@ -126,11 +129,11 @@ class ObjectDiagram(AbstractDiagram):
         if self.cancelLink(): return
 
     def onClicOnObject(self, obj):
-        if self.__currentCreatingLink is not None:
-            if self.__currentCreatingLink_object.acceptLinkTo(obj):
-                info("Création d'un lien de %s à %s."%(self.__currentCreatingLink_object, obj))
-                LinkType = self.__currentCreatingLink_object.getLinkClassTo(obj)
-                l = LinkType(self.__can, self.__currentCreatingLink_object, obj)
+        if self.__currentCreatingLink["id"] is not None:
+            if self.__currentCreatingLink["object"].acceptLinkTo(obj):
+                info("Création d'un lien de %s à %s."%(self.__currentCreatingLink["object"], obj))
+                LinkType = self.__currentCreatingLink["object"].getLinkClassTo(obj)
+                l = LinkType(self.__can, self.__currentCreatingLink["object"], obj)
                 self.__links.append(l)
             else:
                 showerror("Lien impossible", "Il est impossible de créer un lien de cette sorte entre ces 2 objets.")
