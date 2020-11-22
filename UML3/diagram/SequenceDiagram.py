@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from util.theme import *
 
+from util.widgets.RMenu import *
 from util.log import * 
 
 from .AbstractDiagram import *
@@ -22,7 +23,7 @@ class SequenceDiagram(AbstractDiagram):
 
         # RMenu (menu clic-droit) :
         self.__rmenu = RMenu(self)
-        self.__rmenu.add_command(label = "Ajouter un objet", command = self.addClass)
+        self.__rmenu.add_command(label = "Ajouter un objet", command = self.addObject)
 
         # Liens en créations:
         self.__currentCreatingLink = {
@@ -35,3 +36,8 @@ class SequenceDiagram(AbstractDiagram):
 
     def getSaveName(self):
         return "sequence"
+
+    def clic(self, e=None):pass
+    def addObject(self, e=None):pass
+    def new(self):pass
+    def load(self, data):pass

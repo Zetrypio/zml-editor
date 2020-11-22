@@ -6,6 +6,7 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 from util.theme import *
 
 from diagram.ObjectDiagram import *
+from diagram.SequenceDiagram import *
 
 from objects.AbstractObject import *
 from objects.ClassObject import *
@@ -29,11 +30,14 @@ class Application(Frame):
         self.__saveLocation = ""
 
         # Diagrams :
+        self.__tabs = Notebook(self)
+        self.__tabs.pack(expand = YES, fill = BOTH)
         self.__diagrams = [
-            ObjectDiagram(self)
+            ObjectDiagram(self.__tabs),
+            SequenceDiagram(self.__tabs)
         ]
         for diagram in self.__diagrams:
-            diagram.pack(expand = YES, fill = BOTH)
+            self.__tabs.add(diagram, text = diagram.getSaveName())
 
         # Barre de Menus :
         self.__menubar = MenuBar(self.winfo_toplevel(), self)
