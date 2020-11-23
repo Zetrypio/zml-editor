@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 from util.theme import *
 
+from objects.Timeline import *
+
 from util.widgets.RMenu import *
 from util.log import * 
 
@@ -14,6 +16,7 @@ class SequenceDiagram(AbstractDiagram):
         # Attributs normaux
         self.__objects = []
         self.__links = []
+        self.__newXPos = 20
 
         # Canvas des dessins global
         self.__can = Canvas(self, relief = SUNKEN, bd = 3)
@@ -23,7 +26,7 @@ class SequenceDiagram(AbstractDiagram):
 
         # RMenu (menu clic-droit) :
         self.__rmenu = RMenu(self)
-        self.__rmenu.add_command(label = "Ajouter un objet", command = self.addObject)
+        self.__rmenu.add_command(label = "Ajouter une timeline", command = self.addTimeline)
 
         # Liens en créations:
         self.__currentCreatingLink = {
@@ -34,10 +37,21 @@ class SequenceDiagram(AbstractDiagram):
             "binding": None,
         }
 
+    def addTimeline(self):
+        obj = Timeline(self, self.__can)
+        obj.moveto(self.__newXPos, 20)
+        self.__newXPos += 100
+        self.__objects.append(obj)
+        
+        # Si on lui donne pas de nom, ça l'annule, sinon, ça l'ajoute :
+        if not obj.renommer():
+            obj.supprimer(confirmation = False)
+
     def getSaveName(self):
         return "sequence"
 
+    def updateLinks(self):pass
+    def onClicOnObject(self, object):pass
     def clic(self, e=None):pass
-    def addObject(self, e=None):pass
     def new(self):pass
     def load(self, data):pass
