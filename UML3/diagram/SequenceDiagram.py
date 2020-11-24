@@ -23,6 +23,7 @@ class SequenceDiagram(AbstractDiagram):
         self.__can.pack(expand = YES, fill = BOTH)
         self.__can.bind_all("<Escape>",   lambda e:self.cancelLink(), add=1)
         self.__can.bind_all("<Button-1>", self.clic, add=1)
+#        self.__can.bind("<Configure>", self.__onSizeChanged)
 
         # RMenu (menu clic-droit) :
         self.__rmenu = RMenu(self)
@@ -42,10 +43,13 @@ class SequenceDiagram(AbstractDiagram):
         obj.moveto(self.__newXPos, 20)
         self.__newXPos += 100
         self.__objects.append(obj)
-        
+
         # Si on lui donne pas de nom, ça l'annule, sinon, ça l'ajoute :
         if not obj.renommer():
             obj.supprimer(confirmation = False)
+
+#    def __onSizeChanged(self, event):
+#        pass
 
     def getSaveName(self):
         return "sequence"

@@ -5,3 +5,7 @@ DOUBLE_ASSOCIATION = "<->"
 INHERITANCE = "-D"
 AGGREGATION = "<=>-"
 COMPOSITION = "<x>-"
+
+EXECUTION   = "->"
+RECURSIVE   = "<_=]"
+MULTITHREAD = "-`"

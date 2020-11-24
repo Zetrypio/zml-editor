@@ -87,20 +87,15 @@ class Timeline(MoveableObject):
         self.__window = Window(self.__can, self.__x, self.__y, window = self.__contenu, anchor = "nw")
         self.addtag_withtag(self.__window)
 
-#        # Menu du clic-droit :
-#        self.rmenu = RMenu(self.__contenu, andInside = True)
-#        self.rmenu.add_command(label = "Ajouter un attribut", command = self.ajouter_attribut)
-#        self.rmenu.add_command(label = "Ajouter une méthode", command = self.ajouter_methode)
-#        self.rmenu.createLink = Menu(self.rmenu, tearoff=0)
-#        self.rmenu.createLink.add_command(label=DEPENDANCE,         command = lambda : self.beginLink(DEPENDANCE),         image = getImage("assets/textures/menu_icons/arrows/dependance.png"))
-#        self.rmenu.createLink.add_command(label=ASSOCIATION,        command = lambda : self.beginLink(ASSOCIATION),        image = getImage("assets/textures/menu_icons/arrows/association_simple.png"))
-#        self.rmenu.createLink.add_command(label=DOUBLE_ASSOCIATION, command = lambda : self.beginLink(DOUBLE_ASSOCIATION), image = getImage("assets/textures/menu_icons/arrows/association_double.png"))
-#        self.rmenu.createLink.add_command(label=INHERITANCE,        command = lambda : self.beginLink(INHERITANCE),        image = getImage("assets/textures/menu_icons/arrows/heritage.png"))
-#        self.rmenu.createLink.add_command(label=AGGREGATION,        command = lambda : self.beginLink(AGGREGATION),        image = getImage("assets/textures/menu_icons/arrows/aggregation.png"))
-#        self.rmenu.createLink.add_command(label=COMPOSITION,        command = lambda : self.beginLink(COMPOSITION),        image = getImage("assets/textures/menu_icons/arrows/composition.png"))
-#        self.rmenu.add_cascade(label = "Créer un lien", menu = self.rmenu.createLink)
-#        self.rmenu.add_command(label = "Renommer", command = self.renommer)
-#        self.rmenu.add_command(label = "Supprimer", command = self.supprimer)
+        # Menu du clic-droit :
+        self.rmenu = RMenu(self.__contenu, andInside = True)
+        self.rmenu.createLink = Menu(self.rmenu, tearoff=0)
+        self.rmenu.createLink.add_command(label=EXECUTION,   command = lambda : self.beginLink(EXECUTION),   image = getImage("assets/textures/sequence/menu_icons/arrows/execution.png"))
+        self.rmenu.createLink.add_command(label=RECURSIVE,   command = lambda : self.beginLink(RECURSIVE),   image = getImage("assets/textures/sequence/menu_icons/arrows/recursive.png"))
+        self.rmenu.createLink.add_command(label=MULTITHREAD, command = lambda : self.beginLink(MULTITHREAD), image = getImage("assets/textures/sequence/menu_icons/arrows/multithread.png"))
+        self.rmenu.add_cascade(label = "Créer un lien", menu = self.rmenu.createLink)
+        self.rmenu.add_command(label = "Renommer", command = self.renommer)
+        self.rmenu.add_command(label = "Supprimer", command = self.supprimer)
         
         # Ajouter les bindings :
         self._addBindings()
