@@ -52,7 +52,7 @@ THEME = {
 
 THEME_ACTIF = "normal"
 
-# TH�ME :
+# THÈME :
 style = Style()
 #style.theme_use("clam")
 style.configure(".",
