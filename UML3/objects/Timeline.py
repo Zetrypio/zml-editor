@@ -7,9 +7,8 @@ from util.constants.arrowTypes import *
 
 class Timeline(MoveableObject):
     """
-    Classe représentant une classe ou un objet dans l'espace UML.
+    Classe représentant une ligne temporelle dans le diagramme de séquence.
     """
-    
     __NEW_ID = 0
     
     def __init__(self, app, canvas, nom = "", style = "class"):
@@ -31,9 +30,10 @@ class Timeline(MoveableObject):
 
         self.__contenu = Frame(self.__can) # ?
         self.__window = Window(self.__can, 0, 0, window = self.__contenu, anchor = "nw")
-        
+        self.__default_line = Line(self.__can, 0, 0, 0, 100)
+
         self.redraw()
-    
+
     def __str__(self):
         return self.__class__.__name__ + " instance ("+super().__str__()+")"
 
@@ -73,22 +73,22 @@ class Timeline(MoveableObject):
         Permet de redessiner l'objet.
         """
         self.__contenu.destroy()
-        # Cadre de la classe. Comme on peut le bouger (via l'héritage), ça m'a fait pensé
-        # à une fenêtre, donc le nom de la couleur est windowbg et windowtitlebg.
         self.__contenu = Frame(self.__can, relief = SOLID, bd = 2, bg = getColor("%sbg"%self.__style))
         
         # Widget :
-        self.__label_nom =       Label(self.__contenu, text = self.__nom, bg = getColor("%stitlebg"%self.__style))
+        self.__label_nom = Label(self.__contenu, text = self.__nom, bg = getColor("%stitlebg"%self.__style))
         
         # et Placements :
-        self.__label_nom.pack(      side = TOP, fill = X)
+        self.__label_nom.pack(side = TOP, fill = X)
         
         # Auto-placement de la classe dans le canvas.
-        self.__window = Window(self.__can, self.__x, self.__y, window = self.__contenu, anchor = "nw")
+        self.__window = Window(self.__can, self.__x, self.__y, window = self.__contenu, anchor = "n")
+        self.__default_line = Line(self.__can, self.__x, self.__y, self.__x, self.__y+1000, dash=(16, 8), fill="black", width=2)
         self.addtag_withtag(self.__window)
+        self.addtag_withtag(self.__default_line)
 
         # Menu du clic-droit :
-        self.rmenu = RMenu(self.__contenu, andInside = True)
+        self.rmenu = RMenu(self, andInside = True)
         self.rmenu.createLink = Menu(self.rmenu, tearoff=0)
         self.rmenu.createLink.add_command(label=EXECUTION,   command = lambda : self.beginLink(EXECUTION),   image = getImage("assets/textures/sequence/menu_icons/arrows/execution.png"))
         self.rmenu.createLink.add_command(label=RECURSIVE,   command = lambda : self.beginLink(RECURSIVE),   image = getImage("assets/textures/sequence/menu_icons/arrows/recursive.png"))
@@ -106,17 +106,28 @@ class Timeline(MoveableObject):
     def getMaxY(self): return self.__y + self.__contenu.winfo_height()
 
     def _addBindings(self):
-        self.__contenu        .bind("<Button-1>", lambda e: self.clic(), add=1)
-        self.__label_nom      .bind("<Button-1>", lambda e: self.clic(), add=1)
+        self.__contenu     .bind("<Button-1>", lambda e: self.clic(), add=1)
+        self.__label_nom   .bind("<Button-1>", lambda e: self.clic(), add=1)
+        self.__default_line.bind("<Button-1>", lambda e: self.clic(), add=1)
     
     def clic(self):
         self.__app.onClicOnObject(self)
     
     def acceptLinkTo(self, obj):
-        raise NotImplementedError
-    
-    def getLinkClassTo(self):
-        raise NotImplementedError
+        return isinstance(obj, Timeline)
+
+    def getLinkClassTo(self, obj):
+        debug("Link type : %s"%self._linkType)
+        if obj is self:
+            return RecursiveLink
+        if self._linkType in (EXECUTION, RECURSIVE):
+            return ExecutionLink
+        if self._linkType == MULTITHREAD:
+            return DoubleAssociationLink
+        # Default :
+        warn("Link Class Type not Found, falling back to Execution Link.")
+        warn("It is either the Link Class does not exist or the link configuration was invalid.")
+        return ExecutionLink
 
     def moveto(self, x, y):
         """Permet de bouger l'objet à une coordonnée absolue."""
@@ -128,7 +139,7 @@ class Timeline(MoveableObject):
         self.__x += x
         self.__y += y
         self.__app.updateLinks()
-    
+
     def __signalerErreursWarnings(self, nom, firstIsLower = True):
         """
         Indique via une boîte de dialogue s'il y a des erreurs/warnings

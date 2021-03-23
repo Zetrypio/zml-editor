@@ -32,7 +32,7 @@ class ClassObject(AbstractObject):
         return ClassObject(app, can, o["name"])
     
     def acceptLinkTo(self, obj):
-        return True
+        return isinstance(obj, (ClassObject, InterfaceObject, EnumObject))
     
     def getLinkClassTo(self, obj):
         debug("Link type : %s"%self._linkType)
