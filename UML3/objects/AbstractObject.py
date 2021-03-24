@@ -244,6 +244,7 @@ class AbstractObject(MoveableObject):
                 continue
             
         self.__attributs.append(attribut)
+        self.__app.after(10, self.__app.updateLinks)
 
     def ajouter_methode(self):
         """Méthode pour ajouter un attribut."""
@@ -268,16 +269,19 @@ class AbstractObject(MoveableObject):
                 continue
             
         self.__methodes.append(methode)
+        self.__app.after(10, self.__app.updateLinks)
     
     def removeAttribut(self, attr):
         if attr in self.__attributs:
             self.__attributs.remove(attr)
             attr.delete()
+            self.__app.after(10, self.__app.updateLinks)
     
     def removeMethode(self, meth):
         if meth in self.__methodes:
             self.__methodes.remove(meth)
             meth.delete()
+            self.__app.after(10, self.__app.updateLinks)
 
     def beginLink(self, type):
         self._linkType = type
@@ -305,6 +309,7 @@ class AbstractObject(MoveableObject):
                 if not self.__signalerErreursWarnings(nom, firstIsLower=False): break
         self.__nom = nom
         self.__label_nom.config(text = nom)
+        self.__app.after(10, self.__app.updateLinks)
         return True
 
 from .ClassObject import *
