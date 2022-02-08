@@ -69,10 +69,12 @@ class Application(Frame):
         """
         if not confirmation or self.confirmation("d'ouvrir un fichier"):
             location = askopenfilename(title="Ouvrir un fichier", filetypes = [("Fichiers ZML","*.zml"),
-                                                                               ("Fichiers UCLS","*.ucls"),
-                                                                               ("Fichiers QModel","*.qmodel"),
-                                                                               ("Fichiers UML","*.uml"),
-                                                                               ("Tout les fichiers UML supportés", "*.zml;*.ucls;*.qmodel;*.uml;")])
+                                                                               #("Fichiers UCLS","*.ucls"),
+                                                                               #("Fichiers QModel","*.qmodel"),
+                                                                               #("Fichiers UML","*.uml"),
+                                                                               #("Tout les fichiers UML supportés", "*.zml;*.ucls;*.qmodel;*.uml;")])
+                                                                               ("Tout les fichiers UML supportés", "*.zml")])
+            if not location : return False
             return self.openfile(location)
         return False
 
