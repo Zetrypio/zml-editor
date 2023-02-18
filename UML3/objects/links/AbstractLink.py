@@ -54,6 +54,12 @@ class AbstractLink:
         xmaxB = self._objB.getMaxX()
         ymaxB = self._objB.getMaxY()
 
+        # Valeurs par défaut pour éviter des crashs :
+        x1 = xminA
+        y1 = yminA
+        x2 = xmaxB
+        y2 = ymaxB
+
         # Cas des coins :
         if   xminA > xmaxB and yminA > ymaxB:
             x1 = xminA

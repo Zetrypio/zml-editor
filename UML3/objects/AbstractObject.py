@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import re
 from util.theme import *
 from tkinter.messagebox import showwarning, showerror, askyesno
 from util.importPIL import *
@@ -45,7 +46,7 @@ class AbstractObject(MoveableObject):
                                  .name("attribut", "l'attribut", "un attribut")
                                  .typable(True)
                                  .addPrimitiveTypes()   # Ajoute les types primitifs.
-                                 .addTypes("object")    # Ajoute le type object (on ne met pas void evidemment).
+                                 .addTypes("object")    # Ajoute le type object (on ne met pas void évidemment).
                                  .typeDefaut("int")
                                  .modifiers("static", "final"))
 
@@ -121,11 +122,11 @@ class AbstractObject(MoveableObject):
         self.__cadre_methodes  = Frame(self.__contenu, bg = getColor("%sbg"%self.__style))
         
         # et Placements :
-        self.__label_nom.pack(      side = TOP, fill = X)
-        self.__separator_1.pack(    side = TOP, fill = X, expand = YES)
+        self.__label_nom      .pack(side = TOP, fill = X)
+        self.__separator_1    .pack(side = TOP, fill = X, expand = YES)
         self.__cadre_attributs.pack(side = TOP, fill = X, expand = YES)
-        self.__separator_2.pack(    side = TOP, fill = X, expand = YES)
-        self.__cadre_methodes.pack( side = TOP, fill = X, expand = YES)
+        self.__separator_2    .pack(side = TOP, fill = X, expand = YES)
+        self.__cadre_methodes .pack(side = TOP, fill = X, expand = YES)
         
         # Auto-placement de la classe dans le canvas.
         self.__window = Window(self.__can, self.__x, self.__y, window = self.__contenu, anchor = "nw")
@@ -290,7 +291,7 @@ class AbstractObject(MoveableObject):
     def supprimer(self, confirmation = True):
         """
         Permet de supprimer l'objet.
-        @param confirmation : True si on doit demmander une confirmation
+        @param confirmation : True si on doit demander une confirmation
         à l'utilisateur, False sinon.
         """
         if not confirmation or askyesno("Confirmation ?", "Êtes-vous sûr(e) de vouloir réellement supprimer cette classe à tout jamais ?"):
@@ -303,7 +304,7 @@ class AbstractObject(MoveableObject):
         @return True si ça a bien été renommé, False sinon.
         """
         while True:
-            nom = askString(None, "Nom ?", "Veuiller entrer un nom")
+            nom = askString(None, "Nom ?", "Veuillez entrer un nom")
             if nom is None : return False # si on appuie sur annuler.
             if nom:
                 if not self.__signalerErreursWarnings(nom, firstIsLower=False): break
