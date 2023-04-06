@@ -8,7 +8,7 @@ from .AbstractLink import *
 class InheritanceLink(AbstractLink):
     def __init__(self, can, objA, objB):
         super().__init__(can, objA, objB)
-    
+
     def _createLine(self):
         # Ligne parente :
         super()._createLine(width = 2, fill = "black")

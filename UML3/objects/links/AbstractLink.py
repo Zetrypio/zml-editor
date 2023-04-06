@@ -13,7 +13,9 @@ class AbstractLink:
         self._points = []
         self._lines = []
         self.redraw()
-    
+        self._selected = False
+        self._can.tag_bind(self.getTag(), "<ButtonPress-1>", lambda e: self._can.after_idle(lambda: self.__onClic(e)))
+
     def save(self):
         return {
             "from": self._objA.ID,
@@ -42,7 +44,7 @@ class AbstractLink:
         else:
             raise ValueError("Type de Lien Inconnu")
         return cls(can, objA, objB)
-    
+
     def _calculatePoints(self):
         xminA = self._objA.getMinX()
         yminA = self._objA.getMinY()
@@ -102,21 +104,46 @@ class AbstractLink:
         self._points = []
         self._points.append((x1, y1))
         self._points.append((x2, y2))
-    
+
     def redraw(self):
         self.delete()
         self._createLine()
-    
+        tag = self.getTag()
+        for line in self._lines:
+            self._can.addtag_withtag(tag, line)
+
     def _createLine(self, **kwargs):
         self._calculatePoints()
         self._lines.append(self._can.create_line(*self._points, **kwargs))
-    
+
     def delete(self):
         for l in self._lines:
             self._can.delete(l)
-    
+
     def isLinkedTo(self, obj):
         return self._objA is obj or self._objB is obj
+
+    def getTag(self):
+        """
+        Getter pour obtenir le tag qui est présent sur tout les éléments du trait.
+        """
+        return "link_%s"%id(self)
+
+    def isSelected(self):
+        return self._selected
+
+    def deselect(self):
+        self._selected = False
+        self._can.itemconfigure(self.getTag(), fill="#000000")        
+
+    def __onClic(self, event):
+        self._selected ^= True
+        if self._selected:
+            self._can.itemconfigure(self.getTag(), fill="#0078FF")
+        else:
+            self._can.itemconfigure(self.getTag(), fill="#000000")
+        return "break"
+
 
 from .AggregationLink import *
 from .AssociationLink import *

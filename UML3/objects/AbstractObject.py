@@ -162,6 +162,8 @@ class AbstractObject(MoveableObject):
     def getMaxX(self): return self.__x + self.__contenu.winfo_width()
     def getMaxY(self): return self.__y + self.__contenu.winfo_height()
 
+    def getDiagram(self): return self.__app
+
     def _addBindings(self):
         self.__contenu        .bind("<Button-1>", lambda e: self.clic(), add=1)
         self.__label_nom      .bind("<Button-1>", lambda e: self.clic(), add=1)

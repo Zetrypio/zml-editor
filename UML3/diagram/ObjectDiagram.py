@@ -21,8 +21,10 @@ class ObjectDiagram(AbstractDiagram):
         # Canvas des dessins global
         self.__can = Canvas(self, relief = SUNKEN, bd = 3)
         self.__can.pack(expand = YES, fill = BOTH)
+        self.__can.focus_set()
         self.__can.bind_all("<Escape>",   lambda e:self.cancelLink(), add=1)
         self.__can.bind_all("<Button-1>", self.clic, add=1)
+        self.__can.bind_all("<Delete>",   self.deleteLink, add=1)
         
         # RMenu (menu clic-droit) :
         self.__rmenu = RMenu(self)
@@ -110,7 +112,7 @@ class ObjectDiagram(AbstractDiagram):
     def cancelLink(self):
         """Permet d'annuler la création d'un lien en cours."""
         # Si c'est pas en cours on annule rien.
-        if self.__currentCreatingLink is None:
+        if self.__currentCreatingLink is None or self.__currentCreatingLink["id"] is None:
             return False
         # On debind et efface tout :
         self.__can.delete(self.__currentCreatingLink["id"])
@@ -127,6 +129,9 @@ class ObjectDiagram(AbstractDiagram):
 
     def clic(self, event):
         if self.cancelLink(): return
+        for l in self.__links:
+            l.deselect()
+        self.updateLinks()
 
     def onClicOnObject(self, obj):
         if self.__currentCreatingLink["id"] is not None:
@@ -141,6 +146,18 @@ class ObjectDiagram(AbstractDiagram):
     def updateLinks(self):
         for l in self.__links:
             l.redraw()
+
+    def deleteLink(self, event):
+        toRemove = []
+        for l in self.__links:
+            if l.isSelected():
+                toRemove.append(l)
+        for l in toRemove:
+            self.removeLink(l)
+
+    def removeLink(self, link):
+        link.delete()
+        self.__links.remove(link)
 
     ""
     #####################################
