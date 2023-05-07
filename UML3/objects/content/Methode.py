@@ -1,21 +1,22 @@
 # -*- coding:utf-8 -*-
 from .AbstractContent import *
+from sympy.printing import str
 
 class Methode(AbstractContent):
-    def __init__(self, master, nom, visibilitee, modifiers, type, style, *argsTypes):
-        self.argsTypes = argsTypes
+    def __init__(self, master, nom, visibilitee, modifiers, type, style, *argsLists):
+        self.argsLists = argsLists
         super().__init__(master, nom, visibilitee, modifiers, type, style)
     
     def save(self):
         saving = super().save()
         saving["args"] = []
-        for arg in self.argsTypes:
-            saving["args"].append({"type":arg, "name":""}) # TODO
+        for arg in self.argsLists:
+            saving["args"].append(arg)
         return saving
 
     @staticmethod
     def load(master, style, o):
-        return [Methode(master, m["name"], StringVar(value = m["visibility"]), {mod: BooleanVar(value = m["modifiers"][mod]) for mod in m.get("modifiers", {})}, StringVar(value = m["type"]), style, *[t["type"] for t in m["args"]])
+        return [Methode(master, m["name"], StringVar(value = m["visibility"]), {mod: BooleanVar(value = m["modifiers"][mod]) for mod in m.get("modifiers", {})}, StringVar(value = m["type"]), style, *m["args"])
                 for m in o]
 
     def getCadre(self):
@@ -31,7 +32,7 @@ class Methode(AbstractContent):
         self.label.config(text = prefix[self.visibility.get()]
                                 +self.nom
                                 +"("
-                                +(",".join("%s %s"%((i[0], i[1]) for i in self.argsTypes)) if len(self.argsTypes) else "") 
+                                +(",".join(("%s: %s"%(arg["name"], arg["type"]) for arg in self.argsLists)) if len(self.argsLists) else "") 
                                 +")"
                                 +": "
                                 +self.type.get())

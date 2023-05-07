@@ -10,6 +10,7 @@ class AbstractLink:
         self._can = can
         self._objA = objA
         self._objB = objB
+        self._articulations = []
         self._points = []
         self._lines = []
         self.redraw()
@@ -137,11 +138,14 @@ class AbstractLink:
         self._can.itemconfigure(self.getTag(), fill="#000000")        
 
     def __onClic(self, event):
-        self._selected ^= True
-        if self._selected:
+        if not self._selected:
+            self._selected = True
             self._can.itemconfigure(self.getTag(), fill="#0078FF")
+
+        # Ajout d'une articulation :
         else:
-            self._can.itemconfigure(self.getTag(), fill="#000000")
+            self._articulations.append((event.x, event.y))
+            
         return "break"
 
 
