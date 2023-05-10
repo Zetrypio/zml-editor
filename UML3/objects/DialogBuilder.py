@@ -24,6 +24,7 @@ class DialogBuilder:
         self.__typable = False
         self.__types = []
         self.__defautType = ""
+        self.__limitType = False
         self.__modifiers = []
         self.__style = "class"
     
@@ -120,6 +121,15 @@ class DialogBuilder:
         assert defautType in self.__types
         self.__defautType = defautType
         return self
+    def limitType(self, limitType=True):
+        """
+        Permet de choisir si on veut limiter les types à ceux précisés pour cet objet.
+        @param limitType : True si on veut limiter, False sinon.
+        @return self for chaining.
+        """
+        assert isinstance(limitType, bool) 
+        self.__limitType = limitType
+        return self
     def modifiers(self, *modifiers):
         """
         Permet d'ajouter les modifiers, comme static, final, abstract, default, etc.
@@ -213,7 +223,8 @@ class DialogBuilder:
                 Radiobutton(cadreTypeNatifs, text = t, value = t, variable = varT).grid(row = i // cols, column = i % cols, sticky = "w")
             
             # TODO : Mettre les types custom. Avec un combobox ?
-            cbbTypes = Combobox(cadreType, values = [i for i in self.__types if not i in DialogBuilder.__nativeTypes], state="readonly", textvariable=varT)
+            state = "readonly" if self.__limitType else "normal"
+            cbbTypes = Combobox(cadreType, values = [i for i in self.__types if not i in DialogBuilder.__nativeTypes], state=state, textvariable=varT)
             Label(cadreType, text="Autre objet :").pack(side=LEFT)
             cbbTypes.pack(side=LEFT, fill=X)
             varT.set(self.__defautType)

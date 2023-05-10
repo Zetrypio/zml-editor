@@ -32,7 +32,7 @@ class Methode(AbstractContent):
         self.label.config(text = prefix[self.visibility.get()]
                                 +self.nom
                                 +"("
-                                +(",".join(("%s: %s"%(arg["name"], arg["type"]) for arg in self.argsLists)) if len(self.argsLists) else "") 
+                                +(", ".join(("%s: %s"%(arg["name"], arg["type"]) for arg in self.argsLists)) if len(self.argsLists) else "") 
                                 +")"
                                 +": "
                                 +self.type.get())
