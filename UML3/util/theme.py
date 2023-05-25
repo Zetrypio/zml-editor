@@ -85,7 +85,7 @@ def darker(col):
     h, l, s = rgb_to_hls(r, g, b)
     l /= 1.3
     r, g, b = hls_to_rgb(h, l, s)
-    return ("#%2x%2x%2x"%(r, g, b)).replace(" ", "0")
+    return ("#%02x%02x%02x"%(r, g, b))#.replace(" ", "0")
 
 #try:
 #    createTheme("candy", askcolor()[1])
