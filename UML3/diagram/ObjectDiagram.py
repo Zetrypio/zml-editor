@@ -19,7 +19,7 @@ class ObjectDiagram(AbstractDiagram):
         self.__links = []
         
         # Canvas des dessins global
-        self.__can = Canvas(self, relief = SUNKEN, bd = 3)
+        self.__can = Canvas(self, relief = SUNKEN, bd = 3, scrollregion = (0, 0, 400, 400))
         self.__can.pack(expand = YES, fill = BOTH)
         self.__can.focus_set()
         self.__can.bind_all("<Escape>",   lambda e:self.cancelLink(), add=1)
@@ -40,6 +40,54 @@ class ObjectDiagram(AbstractDiagram):
             "y1": -1,
             "binding": None
         }
+
+        # Scrolling du canvas:
+        self.__moving = False
+        self.__prevX = 0
+        self.__prevY = 0
+
+        self.__can.bind("<Configure>", self.__updatescrollregion)
+        self.__can.bind("<ButtonPress-1>", self.__startMove)
+        self.__can.bind("<B1-Motion>", self.__doMove)
+        self.__can.bind("<ButtonRelease-1>", self.__endMove)
+
+        self.after(1, self.__updatescrollregion)
+
+    def __getscrollregion(self):
+        return [int(v) for v in self.__can.cget("scrollregion").split(" ")]
+
+    def __updatescrollregion(self, event=None):
+        w = self.__can.winfo_width()
+        h = self.__can.winfo_height()
+        scrollregion = self.__getscrollregion()
+        scrollregion[2] = scrollregion[0] + w
+        scrollregion[3] = scrollregion[1] + h
+        self.__can.config(scrollregion = scrollregion)
+
+    def __resetVue(self):
+        self.__can.config(scrollregion = (0, 0, 0, 0))
+        self.__updatescrollregion()
+
+    def __startMove(self, event):
+        self.__moving = True
+        self.__prevX = event.x_root
+        self.__prevY = event.y_root
+
+    def __doMove(self, event):
+        if self.__moving:
+            dx = event.x_root - self.__prevX
+            dy = event.y_root - self.__prevY
+            scrollregion = self.__getscrollregion()
+            scrollregion[0] -= dx
+            scrollregion[1] -= dy
+            scrollregion[2] -= dx
+            scrollregion[3] -= dy
+            self.__can.config(scrollregion = scrollregion)
+            self.__prevX = event.x_root
+            self.__prevY = event.y_root
+
+    def __endMove(self, event):
+        self.__moving = False
     
     "" # Note : Ces marques me servent uniquement pour que le repli de code de mon éditeur fasse ce que je veux.
     ##########################
