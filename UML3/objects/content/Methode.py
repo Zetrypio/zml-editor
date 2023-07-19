@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 from .AbstractContent import *
-from sympy.printing import str
 
 class Methode(AbstractContent):
     def __init__(self, master, nom, visibilitee, modifiers, type, style, *argsLists):
