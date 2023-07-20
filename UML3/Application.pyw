@@ -40,6 +40,21 @@ class Application(Frame):
             self.winfo_toplevel().state("zoomed") # Windows Only
         except:
             pass
+
+        # Bindings :
+        self.bind_all("<Control-N>", self.new)
+        self.bind_all("<Control-n>", self.new)
+        self.bind_all("<Control-O>", self.open)
+        self.bind_all("<Control-o>", self.open)
+        self.bind_all("<Control-S>", self.save)
+        self.bind_all("<Control-s>", self.save)
+        self.bind_all("<Control-Shift-S>", self.saveas)
+        self.bind_all("<Control-Shift-s>", self.saveas)
+        self.bind_all("<Control-R>", self.restart)
+        self.bind_all("<Control-r>", self.restart)
+        self.bind_all("<Control-Q>", self.quitter)
+        self.bind_all("<Control-q>", self.quitter)
+
     ""
     ##################################
     # Méthodes pour barre de Menus : #
