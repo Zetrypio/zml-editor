@@ -34,6 +34,8 @@ class InterfaceObject(AbstractObject):
     
     def getLinkClassTo(self, obj):
         debug("Link type : %s"%self._linkType)
+        if self._linkType == DEPENDANCE:
+            return DependanceLink
         if self._linkType == ASSOCIATION:
             return AssociationLink
         if self._linkType == DOUBLE_ASSOCIATION:
